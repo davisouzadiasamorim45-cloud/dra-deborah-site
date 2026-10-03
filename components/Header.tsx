@@ -26,8 +26,8 @@ export default function Header() {
     return () => window.removeEventListener("scroll", aoRolar);
   }, []);
 
-  // Na Home, o cabeçalho fica transparente sobre o hero até a página rolar.
-  const sobreHero = pathname === "/" && !rolou && !aberto;
+  // Nas páginas com hero (Home e prévia), o cabeçalho fica transparente sobre a foto até a página rolar.
+  const sobreHero = ["/", "/previa-home"].includes(pathname) && !rolou && !aberto;
 
   return (
     <header className={`cabecalho ${sobreHero ? "cabecalho-sobre" : ""}`}>

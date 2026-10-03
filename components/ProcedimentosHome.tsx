@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import Seta from "./Seta";
 import { categorias, procedimentos, rotaProcedimento } from "@/lib/site";
 
 /**
@@ -57,8 +56,10 @@ export default function ProcedimentosHome({ children }: { children: React.ReactN
                       onMouseEnter={() => setAtivo(p.slug)}
                       onFocus={() => setAtivo(p.slug)}
                     >
-                      <span>{p.nome}</span>
-                      <Seta />
+                      <span className="procedimentos-home-nome">{p.nome}</span>
+                      <span className="procedimentos-home-trilho">
+                        <SetaSimples />
+                      </span>
                     </Link>
                   </li>
                 ))}
@@ -67,5 +68,14 @@ export default function ProcedimentosHome({ children }: { children: React.ReactN
         ))}
       </div>
     </div>
+  );
+}
+
+// Só a ponta da seta (>): fica colada ao nome e, ao selecionar, corre até a borda direita
+function SetaSimples() {
+  return (
+    <svg className="seta-simples" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M9 5l7 7-7 7" />
+    </svg>
   );
 }

@@ -391,25 +391,30 @@ a { color: inherit; }
 @media (max-width: 700px) { .localizacao-grade { grid-template-columns: 1fr; } }
 
 /* ===== Rodapé ===== */
-.rodape { background: var(--cafe); color: rgba(255, 255, 255, .85); padding-block: clamp(4rem, 8vw, 6rem); font-size: .92rem; }
+.rodape { background: var(--cafe); color: rgba(255, 255, 255, .72); padding-block: clamp(3rem, 5vw, 4rem) 1.5rem; font-size: .92rem; }
 .rodape a { text-decoration: none; transition: color .2s; }
 .rodape a:hover { color: var(--dourado-claro); }
-.rodape-grade { display: grid; grid-template-columns: 1fr 1.3fr 1fr; gap: 3rem; align-items: start; }
-.rodape-marca { display: grid; justify-items: center; gap: 1.5rem; padding-top: 1.5rem; }
-.rodape-marca .logo-monograma { height: 5.5rem; }
-.rodape-marca-nome { font-family: var(--fonte-titulo); font-size: 2.4rem; font-weight: 400; line-height: 1.1; color: var(--branco); text-align: center; }
-.rodape-contato { display: grid; gap: 1.25rem; justify-items: start; }
-.rodape-contato address { max-width: 34ch; }
-.rodape-titulo { font-size: 1.05rem; font-weight: 600; color: var(--branco); }
-.rodape-telefone { font-size: 1.1rem; font-weight: 600; color: var(--branco); }
-.rodape-social { display: flex; gap: 1.75rem; margin-top: 2rem; }
-.rodape-social svg { width: 24px; height: 24px; }
-.rodape-links { display: grid; gap: .75rem; margin-top: 1.25rem; }
-.rodape-copy { font-size: .8rem; color: rgba(255, 255, 255, .55); }
-@media (max-width: 800px) {
-  .rodape-grade { grid-template-columns: 1fr; text-align: center; justify-items: center; }
-  .rodape-contato { justify-items: center; }
-  .rodape-marca { padding-top: 0; }
+.rodape-grade { display: grid; grid-template-columns: 1.4fr 1fr 1.3fr 1fr; gap: clamp(2rem, 4vw, 3.5rem); align-items: start; padding-bottom: clamp(2rem, 4vw, 2.75rem); }
+.rodape-marca { display: grid; gap: 1rem; justify-items: start; }
+.rodape-marca-link { display: inline-flex; align-items: center; gap: .9rem; color: var(--branco); }
+.rodape-marca .logo-monograma { height: 3rem; }
+.rodape-marca-nome { font-family: var(--fonte-titulo); font-size: 1.6rem; line-height: 1.1; color: var(--branco); }
+.rodape-marca p { max-width: 26ch; }
+.rodape-titulo { font-size: .72rem; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: var(--dourado-claro); }
+.rodape-links { display: grid; gap: .55rem; margin-top: 1rem; }
+.rodape-links address { line-height: 1.6; }
+.rodape-base {
+  display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;
+  padding-top: 1.25rem; border-top: 1px solid rgba(255, 255, 255, .1);
+  font-size: .8rem; color: rgba(255, 255, 255, .5);
+}
+.rodape-social { display: flex; gap: 1.25rem; }
+.rodape-social a { color: rgba(255, 255, 255, .75); }
+.rodape-social svg { width: 20px; height: 20px; }
+@media (max-width: 900px) { .rodape-grade { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 520px) {
+  .rodape-grade { grid-template-columns: 1fr; }
+  .rodape-base { justify-content: center; text-align: center; }
 }
 
 /* ===== Animação de entrada ao rolar =====
@@ -700,18 +705,25 @@ p strong, dd strong { font-weight: 600; color: var(--cafe); }
 .procedimentos-home-lista { display: grid; gap: 2.75rem; }
 .procedimentos-home-lista h3 { font-family: var(--fonte-titulo); font-weight: 400; font-size: 1.6rem; color: var(--cafe); padding-bottom: .75rem; border-bottom: 1px solid var(--cafe); }
 .procedimentos-home-lista a {
-  display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+  display: flex; align-items: center;
   padding: 1.05rem .25rem; border-bottom: 1px solid var(--linha); text-decoration: none; color: var(--cafe);
-  font-family: var(--fonte-titulo); font-size: 1.45rem; transition: color .25s, padding .35s;
+  font-family: var(--fonte-titulo); font-size: 1.45rem; transition: color .25s;
 }
-.procedimentos-home-lista a .botao-seta { width: 2rem; height: 2rem; opacity: 0; transform: translateX(-8px); transition: opacity .3s, transform .3s; }
-.procedimentos-home-lista a.ativo, .procedimentos-home-lista a:hover { color: var(--dourado); padding-left: .75rem; }
-.procedimentos-home-lista a.ativo .botao-seta, .procedimentos-home-lista a:hover .botao-seta { opacity: 1; transform: none; }
+/* A seta (>) fica colada ao nome; ao selecionar, corre até a borda direita e o nome se afasta um pouco */
+.procedimentos-home-nome { transition: transform .4s ease; }
+.procedimentos-home-trilho { position: relative; flex: 1; align-self: stretch; }
+.procedimentos-home-lista .seta-simples {
+  position: absolute; top: 50%; left: .5rem; transform: translateY(-50%);
+  color: var(--dourado); opacity: 0; transition: left .45s ease, opacity .3s;
+}
+.procedimentos-home-lista a.ativo, .procedimentos-home-lista a:hover { color: var(--dourado); }
+/* Seta e deslocamento só com o mouse em cima (ou foco pelo teclado); fora disso fica só a palavra */
+.procedimentos-home-lista a:hover .procedimentos-home-nome, .procedimentos-home-lista a:focus-visible .procedimentos-home-nome { transform: translateX(.75rem); }
+.procedimentos-home-lista a:hover .seta-simples, .procedimentos-home-lista a:focus-visible .seta-simples { left: calc(100% - 22px); opacity: 1; }
 @media (max-width: 800px) {
   .procedimentos-home { grid-template-columns: 1fr; }
   .procedimentos-home-intro { position: static; }
   .procedimentos-home-moldura { display: none; }
-  .procedimentos-home-lista a .botao-seta { opacity: 1; transform: none; }
 }
 
 /* --- Resultados: galeria única irregular, cada foto leva ao tratamento --- */
@@ -828,3 +840,46 @@ p strong, dd strong { font-weight: 600; color: var(--cafe); }
 .hero-curva { border-radius: 0 0 50% 50% / 0 0 clamp(12px, 1.6vw, 24px) clamp(12px, 1.6vw, 24px); overflow: hidden; }
 /* Rodapé com o topo curvo, na prévia: a página fecha com o mesmo gesto do hero */
 body:has(.hero-curva) .rodape { border-radius: 50% 50% 0 0 / clamp(12px, 1.6vw, 24px) clamp(12px, 1.6vw, 24px) 0 0; }
+
+/* --- Faixa Procedimentos: recriação da arte do site atual ---
+   Fotos reais à direita; um degradê sólido atrás do texto vai revelando as fotos.
+   Para voltar ao amarelo da arte original, troque --faixa-cor (ex.: #d9b84a) e --faixa-texto (#fff). */
+.faixa-arte {
+  --faixa-cor: 43, 34, 28; /* café, em RGB */
+  --faixa-texto: var(--marfim);
+  position: relative; isolation: isolate; overflow: hidden;
+  min-height: clamp(380px, 36vw, 520px); display: flex; align-items: center;
+  background: rgb(var(--faixa-cor)); color: var(--faixa-texto);
+}
+.faixa-arte-fotos { position: absolute; inset: 0 0 0 auto; width: 64%; z-index: -2; }
+/* As duas fotos se sobrepõem; a segunda se desfaz na primeira em vez de um corte reto */
+.faixa-arte-fotos > div { position: absolute; top: 0; bottom: 0; width: 60%; }
+.faixa-arte-fotos > div:first-child { left: 0; }
+.faixa-arte-fotos > div:last-child {
+  right: 0;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 30%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 30%);
+}
+.faixa-arte-fotos img { object-fit: cover; object-position: center 25%; }
+.faixa-arte::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(90deg,
+    rgb(var(--faixa-cor)) 0%, rgb(var(--faixa-cor)) 36%,
+    rgba(var(--faixa-cor), .78) 52%, rgba(var(--faixa-cor), .45) 72%, rgba(var(--faixa-cor), .3) 100%);
+}
+.faixa-arte-texto { display: grid; gap: 1.1rem; padding-block: clamp(3.5rem, 7vw, 5rem); }
+.faixa-arte-texto > * { max-width: 34rem; }
+.faixa-arte-texto .sobretitulo { color: var(--dourado-claro); }
+.faixa-arte-texto h2 { font-family: var(--fonte-titulo); font-weight: 400; font-size: clamp(2.75rem, 5.5vw, 4.25rem); line-height: 1; }
+.faixa-arte-texto p:not(.sobretitulo) { color: rgba(250, 247, 242, .82); font-size: 1.05rem; }
+.faixa-arte-texto strong { color: var(--faixa-texto); }
+@media (max-width: 800px) {
+  .faixa-arte-fotos { width: 100%; }
+  .faixa-arte::before { background: rgba(var(--faixa-cor), .84); }
+}
+
+/* Convite: seção inteira na cor areia, sem card arredondado; a foto apoia na base da seção */
+.convite2-secao { background: var(--areia); padding-bottom: 0; }
+.convite2-secao .convite2 { border-radius: 0; background: none; padding-inline: 0; }
+/* O rodapé curvo sobe um pouco sobre a seção areia, para os cantos da curva mostrarem areia e não marfim */
+body:has(.convite2-secao) .rodape { position: relative; margin-top: calc(-1 * clamp(12px, 1.6vw, 24px)); }

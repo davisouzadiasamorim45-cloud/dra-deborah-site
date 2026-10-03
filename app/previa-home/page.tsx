@@ -15,7 +15,6 @@ import {
   perguntas,
   procedimentos,
   rotaProcedimento,
-  site,
 } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -126,18 +125,30 @@ export default function PreviaHome() {
         </div>
       </section>
 
-      {/* NOVO: PROCEDIMENTOS (lista com prévia da foto ao passar o mouse) */}
-      <section className="secao">
-        <ProcedimentosHome>
+      {/* FAIXA PROCEDIMENTOS: recriação da arte do site atual (fotos reais + degradê), com texto real */}
+      <section className="faixa-arte">
+        <div className="faixa-arte-fotos" aria-hidden="true">
+          <div>
+            <Image src="/images/home/atendimento-1.webp" alt="" fill sizes="(max-width: 800px) 50vw, 32vw" />
+          </div>
+          <div>
+            <Image src="/images/home/atendimento-2.webp" alt="" fill sizes="(max-width: 800px) 50vw, 32vw" />
+          </div>
+        </div>
+        <div className="container faixa-arte-texto">
           <p className="sobretitulo">Tratamentos</p>
-          <h2 className="titulo-secao">
-            Procedimentos
-          </h2>
-          <p className="procedimentos-home-texto">
+          <h2>Procedimentos</h2>
+          <p>
             Tratamentos estéticos completos para combater os sinais do envelhecimento da pele, como flacidez, manchas e
             perda de firmeza, com foco em <strong>resultados naturais e duradouros</strong>. Cada procedimento é realizado de forma
             personalizada, unindo tecnologia e conhecimento para valorizar sua beleza natural e elevar sua autoestima.
           </p>
+        </div>
+      </section>
+
+      {/* LISTA DE TRATAMENTOS (prévia da foto ao passar o mouse) */}
+      <section className="secao">
+        <ProcedimentosHome>
           <Link href="/tratamentos-esteticos" className="botao botao-contorno">
             Ver todos os tratamentos
             <Seta />
@@ -236,20 +247,6 @@ export default function PreviaHome() {
                   Como chegar
                 </Link>
               </div>
-              <dl className="convite2-contatos">
-                <div>
-                  <dt>WhatsApp</dt>
-                  <dd>{site.telefone}</dd>
-                </div>
-                <div>
-                  <dt>Horário</dt>
-                  <dd>Segunda a sexta · {site.horario[0].horas}</dd>
-                </div>
-                <div>
-                  <dt>Endereço</dt>
-                  <dd>{site.endereco.rua}, {site.endereco.cidade}-{site.endereco.uf}</dd>
-                </div>
-              </dl>
             </div>
           </div>
         </div>
