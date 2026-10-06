@@ -6,6 +6,7 @@ import { site, whatsappLink, mensagens } from "@/lib/site";
 const navegacao = [
   { href: "/", rotulo: "Início" },
   { href: "/tratamentos-esteticos", rotulo: "Serviços" },
+  { href: "/cursos", rotulo: "Cursos" },
   { href: "/localizacao-clinica-facil-de-encontrar", rotulo: "Localização" },
 ];
 

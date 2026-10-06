@@ -11,6 +11,7 @@ import { site, whatsappLink, mensagens } from "@/lib/site";
 const links = [
   { href: "/", rotulo: "Início" },
   { href: "/tratamentos-esteticos", rotulo: "Serviços" },
+  { href: "/cursos", rotulo: "Cursos" },
   { href: "/localizacao-clinica-facil-de-encontrar", rotulo: "Localização" },
 ];
 
@@ -26,8 +27,8 @@ export default function Header() {
     return () => window.removeEventListener("scroll", aoRolar);
   }, []);
 
-  // Nas páginas com hero (Home e prévia), o cabeçalho fica transparente sobre a foto até a página rolar.
-  const sobreHero = ["/", "/previa-home"].includes(pathname) && !rolou && !aberto;
+  // Nas páginas com hero (Home e Home anterior), o cabeçalho fica transparente sobre a foto até a página rolar.
+  const sobreHero = ["/", "/home-anterior"].includes(pathname) && !rolou && !aberto;
 
   return (
     <header className={`cabecalho ${sobreHero ? "cabecalho-sobre" : ""}`}>

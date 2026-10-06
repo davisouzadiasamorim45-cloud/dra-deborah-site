@@ -35,6 +35,9 @@ export const mensagens = {
   agendar: "Olá! Gostaria de agendar uma avaliação com a Dra. Déborah.",
   sobre: (procedimento: string) =>
     `Olá! Gostaria de saber mais sobre ${procedimento}.`,
+  curso: (curso: string) =>
+    `Olá! Tenho interesse no curso de ${curso}. Pode me passar as próximas turmas e valores?`,
+  cursos: "Olá! Gostaria de saber mais sobre os cursos da Dra. Déborah.",
 };
 
 export type Foto = { src: string; alt: string; width: number; height: number; rotulo?: string };
@@ -224,3 +227,95 @@ export const perguntas = [
     resposta: `O agendamento é feito pelo **WhatsApp ${site.telefone}**. O atendimento é de segunda a sexta, das 8h às 12h e das 14h às 18h.`,
   },
 ];
+
+// Cursos ministrados pela Dra. Déborah. Cards em /cursos e uma página por curso em /cursos/<slug>.
+// Textos escritos para o site novo: revisar com a doutora (carga horária, datas e valores são passados pelo WhatsApp).
+// Fotos de banco de imagens livre (Pexels); trocar por fotos das turmas quando houver.
+export type Curso = {
+  slug: string;
+  nome: string;
+  resumo: string;
+  texto: string;
+  conteudo: string[];
+  paraQuem: string[];
+  foto: Foto;
+};
+
+const fotoCurso = (slug: string, alt: string, width: number, height: number): Foto => ({
+  src: `/images/cursos/${slug}.webp`,
+  alt,
+  width,
+  height,
+});
+
+export const cursos: Curso[] = [
+  {
+    slug: "limpeza-de-pele-profunda",
+    nome: "Limpeza de Pele Profunda",
+    resumo: "Da análise da pele à extração segura, o protocolo completo de uma limpeza profissional.",
+    texto:
+      "A limpeza de pele é a porta de entrada da estética facial e um dos procedimentos mais procurados nas clínicas. No curso, você aprende a **avaliar cada tipo de pele** e a conduzir o protocolo completo com **técnica, biossegurança e resultado visível** já na primeira sessão.",
+    conteudo: [
+      "Anatomia e fisiologia da pele",
+      "Avaliação e identificação dos tipos de pele",
+      "Higienização, esfoliação e emoliência",
+      "Técnicas de extração sem marcas",
+      "Máscaras, finalização e cuidados pós-procedimento",
+      "Biossegurança e atendimento ao cliente",
+    ],
+    paraQuem: [
+      "Iniciantes que querem entrar na área da estética",
+      "Esteticistas que desejam aperfeiçoar a técnica",
+      "Profissionais que querem oferecer um novo serviço",
+    ],
+    foto: fotoCurso("limpeza-de-pele-profunda", "Profissional fazendo limpeza de pele em cliente deitada na maca", 1200, 1800),
+  },
+  {
+    slug: "drenagem-corporal",
+    nome: "Drenagem Corporal",
+    resumo: "Manobras manuais que reduzem o inchaço, melhoram a circulação e trazem leveza ao corpo.",
+    texto:
+      "A drenagem linfática estimula o sistema linfático a eliminar o excesso de líquidos e toxinas, **reduzindo o inchaço e a sensação de pernas pesadas**. No curso, você domina as **manobras, a sequência correta e a pressão adequada** para atender com segurança, inclusive no pré e pós-operatório.",
+    conteudo: [
+      "Sistema linfático: como funciona",
+      "Indicações e contraindicações",
+      "Manobras e sequência da drenagem",
+      "Pressão, ritmo e direção corretos",
+      "Drenagem no pré e pós-operatório",
+      "Prática supervisionada",
+    ],
+    paraQuem: [
+      "Iniciantes que querem entrar na área da estética corporal",
+      "Esteticistas e massoterapeutas",
+      "Profissionais que atendem pré e pós-operatório",
+    ],
+    foto: fotoCurso("drenagem-corporal", "Mãos de profissional fazendo drenagem linfática na perna de uma cliente", 1200, 2133),
+  },
+  {
+    slug: "hidrolipoclasia-nao-invasiva",
+    nome: "Hidrolipoclasia não invasiva",
+    resumo: "Tecnologia de ultrassom para gordura localizada, sem agulhas e sem cirurgia.",
+    texto:
+      "A hidrolipoclasia não invasiva usa **ultrassom focado** para agir sobre a gordura localizada, **sem agulhas, sem cortes e sem tempo de recuperação**. No curso, você aprende a indicar o tratamento, montar os protocolos e operar o equipamento com segurança para entregar **resultados de contorno corporal**.",
+    conteudo: [
+      "Fisiologia do tecido adiposo",
+      "Como o ultrassom age na gordura localizada",
+      "Avaliação corporal e indicação do tratamento",
+      "Montagem de protocolos e número de sessões",
+      "Associação com drenagem para potencializar resultados",
+      "Contraindicações e segurança",
+    ],
+    paraQuem: [
+      "Esteticistas que querem trabalhar com tecnologia",
+      "Profissionais de estética corporal",
+      "Quem já faz drenagem e quer ampliar os protocolos",
+    ],
+    foto: fotoCurso("hidrolipoclasia-nao-invasiva", "Aparelho de ultrassom sendo aplicado no abdômen durante tratamento corporal", 1200, 1800),
+  },
+];
+
+export function buscarCurso(slug: string) {
+  return cursos.find((c) => c.slug === slug);
+}
+
+export const rotaCurso = (slug: string) => `/cursos/${slug}`;

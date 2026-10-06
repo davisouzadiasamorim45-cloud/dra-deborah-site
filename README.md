@@ -17,6 +17,7 @@ npm run build    # build de produção
 |---|---|
 | `lib/site.ts` | Telefone, WhatsApp, endereço, horário, procedimentos e preços. Alterar aqui muda o site todo. |
 | `app/page.tsx` | Home |
+| `app/home-anterior/page.tsx` | Versão anterior da Home, mantida para comparação com a cliente (fora do Google). Apagar quando não for mais necessária. |
 | `app/tratamentos-esteticos/page.tsx` | Serviços: carrossel + tratamentos por categoria (`categoria` em `lib/site.ts`) |
 | `app/tratamentos-esteticos/[slug]/page.tsx` | Página de cada tratamento (gerada a partir de `procedimentos` em `lib/site.ts`) |
 | `app/localizacao-clinica-facil-de-encontrar/page.tsx` | Localização |
@@ -42,6 +43,7 @@ npm run build    # build de produção
 - **Preços:** decidir com a doutora se continuam no site. Para ocultar, mudar `exibirPrecos` para `false` em `lib/site.ts`.
 - **Microagulhamento e Limpeza de Pele Profunda:** descrições escritas para o site novo; revisar com a doutora. Faltam fotos para as páginas e para a lista de Serviços.
 - **Perguntas frequentes:** respostas montadas só com informações já publicadas no site. A doutora deve revisar antes de publicar.
+- **Cursos (`/cursos` e `/cursos/<slug>`):** textos, conteúdo programático e "Para quem é" escritos para o site novo; revisar com a doutora. Carga horária, datas e valores ficam para o WhatsApp. Fotos do Pexels (licença livre, sem atribuição obrigatória): [limpeza de pele](https://www.pexels.com/photo/37229293/), [drenagem](https://www.pexels.com/photo/10893345/), [hidrolipoclasia](https://www.pexels.com/photo/33327683/). Trocar por fotos das turmas quando houver.
 - **Depoimentos e fotos da clínica:** seções previstas, aguardando material real (avaliações do Google, fotos do espaço).
 
 ## Publicação (quando aprovado)
