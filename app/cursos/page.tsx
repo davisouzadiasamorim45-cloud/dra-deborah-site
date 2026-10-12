@@ -2,28 +2,51 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import BotaoWhatsApp from "@/components/BotaoWhatsApp";
+import CapaShader, { type FotoCapa } from "@/components/CapaShader";
+import Seta from "@/components/Seta";
 import { cursos, rotaCurso, mensagens } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Cursos de Estética com a Dra. Déborah Carvalho",
   description:
-    "Cursos de Limpeza de Pele Profunda, Drenagem Corporal e Hidrolipoclasia não invasiva em Caxias-MA, com teoria e prática conduzidas pela Dra. Déborah Carvalho.",
+    "Cursos de Limpeza de Pele Profissional, Drenagem Corporal e Hidrolipoclasia não invasiva com a Dra. Déborah Carvalho. Transforme seu interesse pela estética em conhecimento.",
   alternates: { canonical: "/cursos" },
 };
+
+// Foto da capa: para trocar, substitua o arquivo public/images/cursos/capa-cursos.webp (de preferência na vertical,
+// com pelo menos 1200px de largura). Foco = ponto da foto que fica sempre à vista (0..1 a partir do canto superior esquerdo).
+const FOTO_CAPA = "/images/cursos/capa-cursos.webp";
+const fotosCapa: FotoCapa[] = [{ src: FOTO_CAPA, foco: [0.5, 0.55], focoCelular: [0.45, 0.5] }];
 
 export default function Cursos() {
   return (
     <>
-      <section className="secao cursos-intro">
-        <div className="container">
-          <h1 className="titulo-secao">
-            Cursos com a <em>Dra. Déborah</em>
+      <section className="capa-cursos hero-curva">
+        {/* Foto estática: reserva sem WebGL ou com movimento reduzido */}
+        <Image src={FOTO_CAPA} alt="" fill priority sizes="(max-width: 700px) 100vw, 60vw" className="capa-fundo" />
+        <CapaShader fotos={fotosCapa} />
+        <div className="container capa-cursos-conteudo">
+          <h1>
+            Cursos com a <em>Dra. Déborah Carvalho</em>
           </h1>
           <p>
-            Aprenda na prática, dentro da clínica, com quem atende todos os dias. <strong>Teoria e prática supervisionada</strong>{" "}
-            para você sair pronta para atender.
+            Transforme seu interesse pela estética em conhecimento para atuar com <strong>mais confiança e profissionalismo</strong>.
           </p>
+          <div className="capa-cursos-acoes">
+            <a href="#cursos" className="botao botao-claro">
+              Conhecer os cursos
+              <Seta />
+            </a>
+            <BotaoWhatsApp mensagem={mensagens.cursos} variante="contorno-claro">
+              Falar no WhatsApp
+            </BotaoWhatsApp>
+          </div>
+        </div>
+      </section>
 
+      <section id="cursos" className="secao cursos-lista">
+        <div className="container">
+          <h2 className="titulo-secao">Escolha seu curso</h2>
           <ul className="cursos-cards">
             {cursos.map((c) => (
               <li key={c.slug}>

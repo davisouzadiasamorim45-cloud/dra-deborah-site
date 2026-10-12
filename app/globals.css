@@ -36,6 +36,11 @@ body {
 
 img, video { max-width: 100%; height: auto; display: block; }
 h1, h2, h3, p, ul, ol, dl, dd, address, figure { margin: 0; }
+/* Palavras longas em títulos grandes ("Microagulhamento") quebram em vez de empurrar a página para o lado em telas estreitas */
+h1, h2, h3, .banner-titulo, .tratamento-ficha-nome { overflow-wrap: anywhere; }
+@media (max-width: 480px) { h1, h2, h3, .banner-titulo, .tratamento-ficha-nome { hyphens: auto; } }
+/* Telas bem estreitas (320px): título do banner um pouco menor para "Microagulhamento" caber inteiro */
+@media (max-width: 359px) { .banner .banner-titulo { font-size: 1.85rem; } }
 ul, ol { padding: 0; list-style: none; }
 address { font-style: normal; }
 a { color: inherit; }
@@ -379,7 +384,7 @@ a { color: inherit; }
 .chamada h2 { font-family: var(--fonte-titulo); font-weight: 400; font-size: clamp(2rem, 4vw, 3rem); line-height: 1.1; max-width: 22ch; }
 .chamada .botao { margin-top: .5rem; }
 /* Depois de uma seção de outra cor, o painel precisa de respiro em cima; antes de outra seção, ela dispensa o próprio topo */
-:is(.tratamento-resultados, .curso-detalhes) + .chamada { padding-top: clamp(3rem, 6vw, 5rem); }
+:is(.tratamento-resultados, .curso-faixa-areia) + .chamada { padding-top: clamp(3rem, 6vw, 5rem); }
 .chamada + .secao { padding-top: 0; }
 
 .resultados-grade { display: grid; grid-template-columns: 1fr 1.2fr; gap: 3rem; align-items: center; }
@@ -546,7 +551,7 @@ p strong, dd strong { font-weight: 600; color: var(--cafe); }
 
 /* ===== Serviços: seções por categoria ===== */
 .menu-categoria-areia { background: var(--areia); }
-.menu-cabeca { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--linha); }
+.menu-cabeca { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: .25rem 1rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--linha); }
 .menu-contagem { font-size: .9rem; color: var(--texto-suave); }
 .chamada .sobretitulo { color: var(--dourado-claro); }
 @media (max-width: 900px) { .menu-cards { grid-template-columns: repeat(2, 1fr); } }
@@ -722,7 +727,7 @@ p strong, dd strong { font-weight: 600; color: var(--cafe); }
 .procedimentos-home-lista h3 { font-family: var(--fonte-titulo); font-weight: 400; font-size: 1.6rem; color: var(--cafe); padding-bottom: .75rem; border-bottom: 1px solid var(--cafe); }
 .procedimentos-home-lista a {
   display: flex; align-items: center;
-  padding: 1.05rem .25rem; border-bottom: 1px solid var(--linha); text-decoration: none; color: var(--cafe);
+  padding: 1.05rem .25rem; border-bottom: 1px solid var(--linha); text-decoration: none; color: var(--cafe); overflow: hidden;
   font-family: var(--fonte-titulo); font-size: 1.45rem; transition: color .25s;
 }
 /* A seta (>) fica colada ao nome; ao selecionar, corre até a borda direita e o nome se afasta um pouco */
@@ -739,7 +744,7 @@ p strong, dd strong { font-weight: 600; color: var(--cafe); }
 @media (max-width: 800px) {
   .procedimentos-home { grid-template-columns: 1fr; }
   .procedimentos-home-intro { position: static; }
-  .procedimentos-home-moldura { display: none; }
+  .procedimentos-home-moldura { margin-top: .5rem; }
 }
 
 /* --- Resultados: galeria única irregular, cada foto leva ao tratamento --- */
@@ -852,6 +857,21 @@ p strong, dd strong { font-weight: 600; color: var(--cafe); }
 .quem-somos-foto2 img { width: 100%; height: auto; }
 @media (max-width: 900px) { .quem-somos-grade2 { grid-template-columns: 1fr; } }
 
+/* Hero no celular: recorte puxado para o rosto da doutora e texto na base, para o rosto aparecer livre no alto */
+@media (max-width: 700px) {
+  .hero { place-items: end center; }
+  .hero-fundo { object-position: 72% center; }
+  .hero::after {
+    background: linear-gradient(180deg, rgba(28, 21, 17, .4) 0%, rgba(28, 21, 17, .12) 22%, rgba(28, 21, 17, .35) 45%, rgba(28, 21, 17, .82) 75%, rgba(28, 21, 17, .9) 100%);
+  }
+  .hero-conteudo { padding-bottom: 3.5rem; gap: 1.5rem; }
+}
+
+/* Quem somos no celular: a foto ocupa a largura toda da tela */
+@media (max-width: 900px) {
+  .quem-somos-foto2 { margin-inline: -1.25rem; }
+}
+
 /* --- Curva discreta: fim do hero --- */
 .hero-curva { border-radius: 0 0 50% 50% / 0 0 clamp(12px, 1.6vw, 24px) clamp(12px, 1.6vw, 24px); overflow: hidden; }
 /* Rodapé com o topo curvo em todas as páginas: fecha com o mesmo gesto do hero da Home */
@@ -889,9 +909,15 @@ p strong, dd strong { font-weight: 600; color: var(--cafe); }
 .faixa-arte-texto h2 { font-family: var(--fonte-titulo); font-weight: 400; font-size: clamp(2.75rem, 5.5vw, 4.25rem); line-height: 1; }
 .faixa-arte-texto p:not(.sobretitulo) { color: rgba(250, 247, 242, .82); font-size: 1.05rem; }
 .faixa-arte-texto strong { color: var(--faixa-texto); }
+/* Celular: as fotos ficam visíveis numa faixa no topo, que se dissolve no café; o texto vem logo abaixo */
 @media (max-width: 800px) {
-  .faixa-arte-fotos { width: 100%; }
-  .faixa-arte::before { background: rgba(var(--faixa-cor), .84); }
+  .faixa-arte { flex-direction: column; align-items: stretch; min-height: 0; }
+  .faixa-arte-fotos { position: relative; inset: auto; width: 100%; height: clamp(300px, 85vw, 420px); }
+  .faixa-arte::before {
+    inset: 0 0 auto; height: clamp(300px, 85vw, 420px);
+    background: linear-gradient(180deg, rgba(var(--faixa-cor), .05) 0%, rgba(var(--faixa-cor), .2) 55%, rgb(var(--faixa-cor)) 100%);
+  }
+  .faixa-arte-texto { margin-top: -3.5rem; padding-top: 0; }
 }
 
 /* Convite: seção inteira na cor areia, sem card arredondado; a foto apoia na base da seção */
@@ -901,9 +927,66 @@ p strong, dd strong { font-weight: 600; color: var(--cafe); }
 body:has(.convite2-secao) .rodape { position: relative; margin-top: calc(-1 * clamp(12px, 1.6vw, 24px)); }
 
 /* ===== Cursos ===== */
-.cursos-intro { padding-top: clamp(2.5rem, 5vw, 3.5rem); }
-.cursos-intro .container { display: grid; gap: 1.25rem; justify-items: start; }
-.cursos-intro .container > p:not(.sobretitulo) { max-width: 56ch; font-size: 1.1rem; color: var(--texto-suave); }
+/* Capa de /cursos: fotos dos cursos em WebGL (components/CapaShader.tsx), com a foto estática por baixo como reserva */
+.capa-cursos {
+  position: relative; isolation: isolate; overflow: hidden;
+  min-height: clamp(520px, 78svh, 760px); display: flex; align-items: center;
+  background: var(--cafe); color: var(--branco);
+}
+.capa-fundo { object-fit: cover; object-position: 50% 55%; z-index: -2; }
+.capa-shader { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -2; opacity: 0; pointer-events: none; }
+.capa-shader[data-pronto] { opacity: 1; }
+/* Escurece só onde fica o texto */
+.capa-cursos::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(28, 21, 17, .6) 0%, rgba(28, 21, 17, .3) 40%, rgba(28, 21, 17, 0) 62%),
+    linear-gradient(180deg, rgba(28, 21, 17, .35) 0%, rgba(28, 21, 17, 0) 30%, rgba(28, 21, 17, 0) 70%, rgba(28, 21, 17, .5) 100%);
+}
+.capa-cursos-conteudo { display: grid; gap: 1.5rem; justify-items: start; padding-block: clamp(4rem, 8vw, 6rem); }
+.capa-cursos-conteudo h1 {
+  font-family: var(--fonte-titulo); font-weight: 400; font-size: clamp(2.6rem, 5.2vw, 4.4rem); line-height: 1.04; max-width: 13ch;
+}
+.capa-cursos-conteudo h1 em { color: var(--dourado-claro); }
+.capa-cursos-conteudo > p { max-width: 40ch; font-size: 1.1rem; color: rgba(255, 255, 255, .8); }
+.capa-cursos-conteudo > p strong { color: var(--branco); }
+.capa-cursos-acoes { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: .75rem; }
+/* Nome do curso da foto em cena */
+.capa-legenda {
+  position: absolute; z-index: 1; right: max(1.25rem, calc((100% - var(--largura)) / 2)); bottom: clamp(1.75rem, 4vw, 2.75rem);
+  display: flex; align-items: baseline; gap: .75rem;
+  font-size: .78rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: rgba(255, 255, 255, .88);
+  animation: surgir .8s ease-out both;
+}
+.capa-legenda span { font-family: var(--fonte-titulo); font-size: 1.1rem; letter-spacing: 0; color: var(--dourado-claro); }
+@media (min-width: 701px) {
+  /* Desktop: a foto estática fica à direita e se dissolve à esquerda, igual à capa animada */
+  .capa-cursos .capa-fundo {
+    left: auto !important; width: 58% !important;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 50%);
+    mask-image: linear-gradient(90deg, transparent 0%, #000 50%);
+  }
+}
+@media (max-width: 700px) {
+  .capa-cursos { min-height: 82svh; align-items: flex-end; }
+  .capa-cursos::after {
+    background: linear-gradient(180deg, rgba(28, 21, 17, .35) 0%, rgba(28, 21, 17, .1) 25%, rgba(28, 21, 17, .45) 50%, rgba(28, 21, 17, .9) 82%);
+  }
+  .capa-cursos-conteudo { padding-block: 0 3.5rem; }
+  .capa-legenda { top: 1.25rem; bottom: auto; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  /* A foto estática espera a capa animada; se não houver WebGL, aparece sozinha logo depois */
+  .capa-fundo { animation: capa-reserva .6s ease-out 1s both; }
+  .capa-cursos-conteudo > * { animation: surgir 1.1s cubic-bezier(.2, .7, .2, 1) both; }
+  .capa-cursos-conteudo > :nth-child(1) { animation-delay: .5s; }
+  .capa-cursos-conteudo > :nth-child(2) { animation-delay: .75s; }
+  .capa-cursos-conteudo > :nth-child(3) { animation-delay: 1s; }
+}
+@media (prefers-reduced-motion: reduce) { .capa-legenda { animation: none; } }
+@keyframes capa-reserva { from { opacity: 0; } }
+
+.cursos-lista .titulo-secao { margin-bottom: .5rem; }
 .cursos-cards { margin-top: 2rem; width: 100%; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
 .cursos-cards li { display: flex; }
 .curso-card {
@@ -937,23 +1020,96 @@ body:has(.convite2-secao) .rodape { position: relative; margin-top: calc(-1 * cl
 .curso-foto img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--raio); }
 .curso-texto { display: grid; gap: 1.25rem; justify-items: start; }
 .curso-texto > p:not(.sobretitulo) { max-width: 58ch; color: var(--texto-suave); }
-.curso-texto .curso-resumo { font-size: 1.15rem; color: var(--cafe); }
+.curso-texto > p.curso-resumo { font-size: 1.15rem; color: var(--cafe); }
 .curso-texto .botao { margin-top: .75rem; }
-.curso-detalhes { background: var(--areia); }
-.curso-detalhes-grade { display: grid; grid-template-columns: 1fr 1fr minmax(0, 340px); gap: clamp(2rem, 5vw, 4rem); align-items: start; }
-.curso-detalhes-titulo { font-family: var(--fonte-titulo); font-weight: 400; font-size: 1.85rem; line-height: 1.15; color: var(--cafe); margin-bottom: 1.5rem; }
-.curso-detalhes .atendimento2-pontos li { align-items: baseline; }
-.curso-detalhes .atendimento2-pontos li::before { transform: translateY(-.3em); }
-.curso-detalhes .tratamento-ficha-nome { font-size: 1.6rem; }
+.curso-destaque { font-family: var(--fonte-titulo); font-style: italic; font-size: 1.35rem; line-height: 1.3; }
+.curso-texto > p.curso-destaque { color: var(--dourado); }
+.curso-faixa-areia { background: var(--areia); }
+
+/* Título à esquerda, conteúdo à direita (Sobre e Conteúdo) */
+.curso-duas-colunas { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); gap: clamp(2rem, 6vw, 5rem); align-items: start; }
+.curso-conteudo-cabeca { position: sticky; top: calc(var(--cabecalho) + 1.5rem); display: grid; gap: 1rem; justify-items: start; }
+.curso-contagem { font-size: .9rem; color: var(--texto-suave); }
+.curso-paragrafos { display: grid; gap: 1.1rem; align-content: start; }
+.curso-paragrafos p { max-width: 62ch; color: var(--texto-suave); }
+/* Abertura da seção Sobre: primeiro parágrafo maior, com filete dourado */
+.curso-paragrafos p.curso-abertura {
+  font-family: var(--fonte-titulo); font-size: clamp(1.25rem, 2vw, 1.55rem); line-height: 1.5; color: var(--cafe);
+  padding-left: 1.5rem; border-left: 2px solid var(--dourado-claro);
+}
+.curso-paragrafos p.curso-abertura strong { font-weight: 400; font-style: italic; color: var(--dourado); }
+
+/* Etapas do procedimento: linha do tempo numerada ocupando a largura toda */
+.curso-etapas {
+  margin-top: clamp(2.5rem, 5vw, 4rem); display: grid; grid-template-columns: repeat(6, minmax(0, 1fr));
+  border-top: 1px solid var(--cafe);
+}
+.curso-etapas li { position: relative; display: grid; gap: .6rem; align-content: start; padding: 1.5rem 1.25rem 0 0; }
+.curso-etapas li::before {
+  content: ""; position: absolute; top: -5px; left: 0; width: 9px; height: 9px; border-radius: 50%; background: var(--dourado);
+}
+.curso-etapa-numero { font-family: var(--fonte-titulo); font-size: 2.25rem; line-height: 1; color: var(--dourado); }
+.curso-etapa-nome { font-size: 1rem; font-weight: 500; line-height: 1.35; color: var(--cafe); }
+.curso-subtitulo { font-family: var(--fonte-titulo); font-weight: 400; font-size: clamp(1.75rem, 3vw, 2.25rem); line-height: 1.15; color: var(--cafe); margin-bottom: .5rem; }
+
+/* Módulos em sanfona, no mesmo gesto das Perguntas frequentes */
+.modulos { border-top: 1px solid var(--cafe); }
+.modulos details { border-bottom: 1px solid var(--linha); }
+.modulos summary {
+  list-style: none; cursor: pointer;
+  display: grid; grid-template-columns: 6.5rem 1fr auto; align-items: baseline; gap: 1rem;
+  padding-block: 1.35rem;
+}
+.modulos summary::-webkit-details-marker { display: none; }
+.modulos summary::after { content: "+"; font-weight: 300; font-size: 1.5rem; line-height: 1; color: var(--dourado); transition: transform .25s; }
+.modulos details[open] summary::after { transform: rotate(45deg); }
+.modulo-numero { font-size: .74rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--dourado); }
+.modulo-titulo { font-family: var(--fonte-titulo); font-size: 1.4rem; line-height: 1.25; color: var(--cafe); transition: color .2s; }
+.modulos summary:hover .modulo-titulo { color: var(--dourado); }
+.modulos ul { display: grid; gap: .55rem; padding: 0 0 1.6rem 7.5rem; }
+.modulos li { position: relative; padding-left: 1.1rem; color: var(--texto-suave); }
+.modulos li::before { content: ""; position: absolute; left: 0; top: .72em; width: 5px; height: 5px; border-radius: 50%; background: var(--dourado-claro); }
+
+/* Para quem é + Por que fazer */
+.curso-publico { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2.5rem, 6vw, 5rem); align-items: start; }
+.curso-motivos { margin-top: 1rem; }
+.curso-motivos li, .curso-faixa-areia .atendimento2-pontos li { align-items: baseline; }
+.curso-motivos li::before { transform: translateY(-.3em); }
+
+/* Diferencial: frase grande centralizada */
+.curso-diferencial { text-align: center; }
+.curso-diferencial .container { display: grid; gap: 1.5rem; justify-items: center; }
+.curso-diferencial-frase {
+  font-family: var(--fonte-titulo); font-size: clamp(1.6rem, 3.2vw, 2.4rem); line-height: 1.3; color: var(--cafe); max-width: 32ch;
+}
+.curso-diferencial-frase strong { font-weight: 400; font-style: italic; color: var(--dourado); }
+.curso-diferencial-texto { max-width: 60ch; color: var(--texto-suave); }
+
+/* O que você precisa + Informações do curso */
+.curso-info { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 400px); gap: clamp(2.5rem, 6vw, 5rem); align-items: start; }
+.curso-info-unica { max-width: 480px; }
+.curso-info .tratamento-ficha-nome, .curso-info-unica .tratamento-ficha-nome { font-size: 1.6rem; }
 .curso-ficha { width: 100%; }
 .curso-ficha div { padding-block: .75rem; border-bottom: 1px solid var(--linha); }
 .curso-ficha dt { font-size: .78rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--dourado); }
 .curso-ficha dd { color: var(--cafe); }
-@media (max-width: 1000px) {
-  .curso-detalhes-grade { grid-template-columns: 1fr 1fr; }
-  .curso-detalhes-grade aside { grid-column: 1 / -1; }
-}
+
+/* Chamada final do curso: texto extra no painel e observação legal abaixo */
+.chamada .chamada-texto { max-width: 52ch; color: rgba(255, 255, 255, .78); }
+.curso-aviso { margin: 1.5rem auto 0; width: min(100% - 2.5rem, 760px); font-size: .82rem; line-height: 1.6; color: var(--texto-suave); text-align: center; }
+
+@media (max-width: 1000px) { .curso-etapas { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 1.75rem; } }
+@media (max-width: 480px) { .curso-etapas { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 800px) {
-  .cursos-cards, .curso-grade, .curso-detalhes-grade { grid-template-columns: 1fr; }
+  .cursos-cards, .curso-grade, .curso-duas-colunas, .curso-publico, .curso-info { grid-template-columns: 1fr; }
+  .curso-card-foto img { aspect-ratio: 5 / 4; }
   .curso-foto { max-width: 360px; width: calc(100% - 1.25rem); }
+  .curso-conteudo-cabeca { position: static; }
+}
+@media (max-width: 560px) {
+  .modulos summary { grid-template-columns: 1fr auto; gap: .35rem 1rem; }
+  .modulo-numero { grid-column: 1; }
+  .modulo-titulo { grid-column: 1; grid-row: 2; }
+  .modulos summary::after { grid-column: 2; grid-row: 1 / 3; align-self: center; }
+  .modulos ul { padding-left: 0; }
 }

@@ -2,16 +2,26 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { categorias, procedimentos, rotaProcedimento } from "@/lib/site";
 
 /**
  * Seção "Procedimentos" da Home: texto à esquerda com uma moldura que mostra a foto do tratamento
  * sob o mouse (ou em foco) na lista da direita. Sem foto, a moldura mostra o monograma e o nome.
+ * Em telas de toque (sem mouse), as fotos se alternam sozinhas.
  */
 export default function ProcedimentosHome({ children }: { children: React.ReactNode }) {
   const [ativo, setAtivo] = useState(procedimentos[0].slug);
   const atual = procedimentos.find((p) => p.slug === ativo) ?? procedimentos[0];
+
+  useEffect(() => {
+    if (!window.matchMedia("(hover: none)").matches || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const comFoto = procedimentos.filter((p) => p.banner).map((p) => p.slug);
+    const timer = setInterval(() => {
+      setAtivo((a) => comFoto[(comFoto.indexOf(a) + 1) % comFoto.length]);
+    }, 3200);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <div className="container procedimentos-home">

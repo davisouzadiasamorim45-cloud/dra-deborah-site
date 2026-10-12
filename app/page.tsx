@@ -77,7 +77,6 @@ export default function Home() {
       <section className="secao quem-somos">
         <div className="container quem-somos-grade quem-somos-grade2">
           <div className="quem-somos-texto">
-            <p className="sobretitulo">Quem somos</p>
             <h2 className="titulo-nome">
               Dra. <strong>Déborah</strong> Carvalho
             </h2>
@@ -115,7 +114,6 @@ export default function Home() {
         <div className="container atendimento2-grade">
           <VideoAtendimento />
           <div className="atendimento2-texto">
-            <p className="sobretitulo">Por dentro da clínica</p>
             <h2 className="titulo-secao">
               A Dra. Déborah em atendimento
             </h2>
@@ -140,7 +138,6 @@ export default function Home() {
           </div>
         </div>
         <div className="container faixa-arte-texto">
-          <p className="sobretitulo">Tratamentos</p>
           <h2>Procedimentos</h2>
           <p>
             Tratamentos estéticos completos para combater os sinais do envelhecimento da pele, como flacidez, manchas e
@@ -186,7 +183,6 @@ export default function Home() {
 
       {/* AVALIAÇÃO: seção presa na tela, passos chegando pela direita */}
       <ConsultaPassos passos={passos}>
-        <p className="sobretitulo">Sua primeira consulta</p>
         <h2 className="titulo-secao">
           Como funciona a avaliação na Clínica Déborah Carvalho?
         </h2>
@@ -234,7 +230,6 @@ export default function Home() {
               />
             </div>
             <div className="convite2-texto">
-              <p className="sobretitulo">Atendimento exclusivo</p>
               <h2 className="titulo-secao">
                 Agendar Avaliação
               </h2>

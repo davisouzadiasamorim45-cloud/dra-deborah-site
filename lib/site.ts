@@ -229,15 +229,35 @@ export const perguntas = [
 ];
 
 // Cursos ministrados pela Dra. Déborah. Cards em /cursos e uma página por curso em /cursos/<slug>.
-// Textos escritos para o site novo: revisar com a doutora (carga horária, datas e valores são passados pelo WhatsApp).
+// Limpeza de Pele Profissional: texto oficial enviado pela doutora.
+// Drenagem e Hidrolipoclasia: textos provisórios escritos para o site novo, aguardando o material da doutora.
+// Modalidade, carga horária, certificado e valores ainda não foram informados: a página remete ao WhatsApp.
 // Fotos de banco de imagens livre (Pexels); trocar por fotos das turmas quando houver.
+export type Modulo = { titulo: string; itens: string[] };
+
 export type Curso = {
   slug: string;
   nome: string;
+  // Frase do card em /cursos e subtítulo do topo da página do curso
   resumo: string;
-  texto: string;
-  conteudo: string[];
+  intro: string[];
+  // Frase de efeito que fecha o topo
+  destaque?: string;
+  sobre?: string[];
+  // Etapas do procedimento, mostradas numeradas na seção "Sobre o curso"
+  etapas?: string[];
+  // Conteúdo em módulos; sem módulos, usa a lista simples `conteudo`
+  modulos?: Modulo[];
+  conteudo?: string[];
   paraQuem: string[];
+  porQue?: string[];
+  diferencial?: string[];
+  requisitos?: string[];
+  ficha: { rotulo: string; valor: string }[];
+  final?: { titulo: string; textos: string[] };
+  // Observação legal no fim da página
+  aviso?: string;
+  botoes?: { inscricao: string; vaga: string };
   foto: Foto;
 };
 
@@ -250,44 +270,168 @@ const fotoCurso = (slug: string, alt: string, width: number, height: number): Fo
 
 export const cursos: Curso[] = [
   {
-    slug: "limpeza-de-pele-profunda",
-    nome: "Limpeza de Pele Profunda",
-    resumo: "Da análise da pele à extração segura, o protocolo completo de uma limpeza profissional.",
-    texto:
-      "A limpeza de pele é a porta de entrada da estética facial e um dos procedimentos mais procurados nas clínicas. No curso, você aprende a **avaliar cada tipo de pele** e a conduzir o protocolo completo com **técnica, biossegurança e resultado visível** já na primeira sessão.",
-    conteudo: [
-      "Anatomia e fisiologia da pele",
-      "Avaliação e identificação dos tipos de pele",
-      "Higienização, esfoliação e emoliência",
-      "Técnicas de extração sem marcas",
-      "Máscaras, finalização e cuidados pós-procedimento",
-      "Biossegurança e atendimento ao cliente",
+    slug: "limpeza-de-pele-profissional",
+    nome: "Limpeza de Pele Profissional",
+    resumo: "Aprenda a realizar procedimentos faciais com técnica, segurança e conhecimento!",
+    intro: [
+      "Transforme seu interesse pela estética em conhecimento para atuar com **mais confiança e profissionalismo**.",
+      "Aprenda os fundamentos da limpeza de pele profissional, desde a avaliação inicial até a finalização do procedimento, conhecendo as técnicas, os cosméticos e os equipamentos utilizados na rotina estética.",
+      "Um curso desenvolvido para quem deseja aprimorar suas habilidades, compreender cada etapa do atendimento e oferecer uma experiência mais cuidadosa e profissional aos clientes.",
+    ],
+    destaque: "Sua evolução na estética começa com conhecimento!",
+    sobre: [
+      "A limpeza de pele é um dos procedimentos mais conhecidos na área da estética facial. Para realizá-la de maneira responsável e individualizada, é importante conhecer a pele, identificar suas necessidades, selecionar os produtos adequados e respeitar as particularidades de cada cliente.",
+      "Neste curso, você terá contato com os principais fundamentos da limpeza de pele profissional e aprenderá a compreender o procedimento como um todo: **avaliação, preparação da pele, emoliência, extração quando indicada, utilização de recursos eletroestéticos e cuidados finais**.",
+      "O objetivo é ajudar você a desenvolver uma visão mais técnica, organizada e consciente do atendimento facial.",
+    ],
+    etapas: [
+      "Avaliação",
+      "Preparação da pele",
+      "Emoliência",
+      "Extração, quando indicada",
+      "Recursos eletroestéticos",
+      "Cuidados finais",
+    ],
+    modulos: [
+      {
+        titulo: "Fundamentos da pele",
+        itens: [
+          "Anatomia e fisiologia básica da pele.",
+          "Tipos e condições de pele.",
+          "Características da pele oleosa, seca, mista e sensível.",
+          "Comedões, poros obstruídos e alterações comuns.",
+          "Importância da avaliação individualizada.",
+        ],
+      },
+      {
+        titulo: "Avaliação facial e anamnese",
+        itens: [
+          "Como realizar a avaliação inicial.",
+          "Identificação das necessidades da pele.",
+          "Preenchimento da ficha de anamnese.",
+          "Reconhecimento de contraindicações e sinais de alerta.",
+          "Quando adaptar, adiar ou não realizar o procedimento.",
+        ],
+      },
+      {
+        titulo: "Cosméticos utilizados na limpeza de pele",
+        itens: [
+          "Higienizantes e demaquilantes.",
+          "Esfoliantes e produtos emolientes.",
+          "Máscaras faciais.",
+          "Cosméticos calmantes e hidratantes.",
+          "Como selecionar os produtos conforme as características da pele.",
+        ],
+      },
+      {
+        titulo: "Vapor de ozônio",
+        itens: [
+          "Princípios básicos de funcionamento do equipamento.",
+          "Finalidade do vapor na preparação da pele.",
+          "Utilização conforme indicação e protocolo.",
+          "Cuidados com distância, tempo e exposição.",
+          "Contraindicações e precauções de segurança.",
+        ],
+      },
+      {
+        titulo: "Técnica de extração",
+        itens: [
+          "Preparação da pele para a extração.",
+          "Técnicas cuidadosas e controle da pressão.",
+          "Quando a extração é indicada e quando deve ser evitada.",
+          "Como reduzir o risco de irritação e lesões.",
+          "Higiene dos materiais e cuidados durante o procedimento.",
+        ],
+      },
+      {
+        titulo: "Alta frequência",
+        itens: [
+          "Princípios de funcionamento do equipamento.",
+          "Finalidade e utilização como recurso complementar.",
+          "Cuidados com eletrodo, contato e aplicação.",
+          "Contraindicações e precauções.",
+          "Uso conforme as orientações do fabricante e o protocolo adotado.",
+        ],
+      },
+      {
+        titulo: "Passo a passo da limpeza de pele",
+        itens: [
+          "Organização do ambiente e dos materiais.",
+          "Higienização inicial.",
+          "Avaliação e preparação da pele.",
+          "Esfoliação, quando indicada.",
+          "Emoliência e extração, quando apropriadas.",
+          "Utilização criteriosa dos equipamentos.",
+          "Aplicação de máscara e finalização.",
+          "Orientações de cuidados domiciliares.",
+        ],
+      },
+      {
+        titulo: "Biossegurança e atendimento profissional",
+        itens: [
+          "Higienização das mãos e dos materiais.",
+          "Organização da cabine de atendimento.",
+          "Cuidados com materiais reutilizáveis e descartáveis.",
+          "Registro das informações do cliente.",
+          "Orientações pós-procedimento.",
+          "Ética, responsabilidade e limites de atuação profissional.",
+        ],
+      },
     ],
     paraQuem: [
-      "Iniciantes que querem entrar na área da estética",
-      "Esteticistas que desejam aperfeiçoar a técnica",
-      "Profissionais que querem oferecer um novo serviço",
+      "Este curso é destinado a **profissionais e estudantes da área da estética** que desejam aprender ou aperfeiçoar seus conhecimentos em limpeza de pele, respeitando os requisitos de formação e os limites legais de sua atuação.",
+      "É uma oportunidade para quem busca aprimorar a técnica, compreender melhor os equipamentos e desenvolver um atendimento mais cuidadoso e organizado.",
     ],
-    foto: fotoCurso("limpeza-de-pele-profunda", "Profissional fazendo limpeza de pele em cliente deitada na maca", 1200, 1800),
+    porQue: [
+      "Aprenda a organizar as etapas da limpeza de pele.",
+      "Amplie seus conhecimentos sobre avaliação facial.",
+      "Entenda a finalidade do vapor de ozônio e da alta frequência.",
+      "Conheça cuidados importantes para um procedimento responsável.",
+      "Aprimore sua seleção de cosméticos e protocolos.",
+      "Desenvolva mais segurança na tomada de decisões dentro da sua área de atuação.",
+    ],
+    diferencial: [
+      "Mais do que conhecer uma sequência de etapas, é importante compreender **por que cada etapa é realizada** e quando ela realmente é indicada.",
+      "A proposta do curso é unir conhecimento técnico, atenção às necessidades individuais da pele e responsabilidade profissional, valorizando a qualidade do atendimento e o cuidado com cada cliente.",
+    ],
+    requisitos: [
+      "Você precisará de **interesse em aprender, disposição para estudar e atenção aos princípios de biossegurança**.",
+      "Os equipamentos e materiais necessários dependerão da modalidade do curso. Caso haja prática presencial, serão apresentados os materiais utilizados nas demonstrações, conforme a estrutura disponível.",
+    ],
+    ficha: [
+      { rotulo: "Curso", valor: "Limpeza de Pele Profissional" },
+      { rotulo: "Professora", valor: "Dra. Déborah Carvalho" },
+      { rotulo: "Área", valor: "Saúde e Estética Avançada" },
+    ],
+    final: {
+      titulo: "Dê o próximo passo na sua jornada na estética!",
+      textos: [
+        "Invista no seu conhecimento, aperfeiçoe sua técnica e amplie sua compreensão sobre os cuidados com a pele.",
+        "Aprender com responsabilidade é o primeiro passo para evoluir profissionalmente.",
+      ],
+    },
+    aviso:
+      "Os resultados profissionais dependem da formação prévia, da prática, do cumprimento das normas de biossegurança e da atuação dentro dos limites legais da profissão. O curso não substitui habilitação profissional quando exigida.",
+    botoes: { inscricao: "Quero me inscrever no curso", vaga: "Quero garantir minha vaga" },
+    foto: fotoCurso("limpeza-de-pele-profissional", "Profissional fazendo limpeza de pele em cliente deitada na maca", 1200, 1800),
   },
   {
     slug: "drenagem-corporal",
     nome: "Drenagem Corporal",
     resumo: "Manobras manuais que reduzem o inchaço, melhoram a circulação e trazem leveza ao corpo.",
-    texto:
-      "A drenagem linfática estimula o sistema linfático a eliminar o excesso de líquidos e toxinas, **reduzindo o inchaço e a sensação de pernas pesadas**. No curso, você domina as **manobras, a sequência correta e a pressão adequada** para atender com segurança, inclusive no pré e pós-operatório.",
+    intro: [
+      "A drenagem linfática estimula o sistema linfático a eliminar o excesso de líquidos e toxinas, **reduzindo o inchaço e a sensação de pernas pesadas**. No curso, você conhece as **manobras, a sequência correta e a pressão adequada** para atender com segurança.",
+    ],
     conteudo: [
       "Sistema linfático: como funciona",
       "Indicações e contraindicações",
       "Manobras e sequência da drenagem",
       "Pressão, ritmo e direção corretos",
-      "Drenagem no pré e pós-operatório",
-      "Prática supervisionada",
     ],
-    paraQuem: [
-      "Iniciantes que querem entrar na área da estética corporal",
-      "Esteticistas e massoterapeutas",
-      "Profissionais que atendem pré e pós-operatório",
+    paraQuem: ["Profissionais e estudantes da área da estética que desejam aprender ou aperfeiçoar a técnica de drenagem corporal."],
+    ficha: [
+      { rotulo: "Curso", valor: "Drenagem Corporal" },
+      { rotulo: "Professora", valor: "Dra. Déborah Carvalho" },
     ],
     foto: fotoCurso("drenagem-corporal", "Mãos de profissional fazendo drenagem linfática na perna de uma cliente", 1200, 2133),
   },
@@ -295,20 +439,20 @@ export const cursos: Curso[] = [
     slug: "hidrolipoclasia-nao-invasiva",
     nome: "Hidrolipoclasia não invasiva",
     resumo: "Tecnologia de ultrassom para gordura localizada, sem agulhas e sem cirurgia.",
-    texto:
-      "A hidrolipoclasia não invasiva usa **ultrassom focado** para agir sobre a gordura localizada, **sem agulhas, sem cortes e sem tempo de recuperação**. No curso, você aprende a indicar o tratamento, montar os protocolos e operar o equipamento com segurança para entregar **resultados de contorno corporal**.",
+    intro: [
+      "A hidrolipoclasia não invasiva usa **ultrassom focado** para agir sobre a gordura localizada, **sem agulhas e sem cortes**. No curso, você aprende a indicar o tratamento, montar os protocolos e utilizar o equipamento com segurança.",
+    ],
     conteudo: [
       "Fisiologia do tecido adiposo",
       "Como o ultrassom age na gordura localizada",
       "Avaliação corporal e indicação do tratamento",
       "Montagem de protocolos e número de sessões",
-      "Associação com drenagem para potencializar resultados",
       "Contraindicações e segurança",
     ],
-    paraQuem: [
-      "Esteticistas que querem trabalhar com tecnologia",
-      "Profissionais de estética corporal",
-      "Quem já faz drenagem e quer ampliar os protocolos",
+    paraQuem: ["Profissionais e estudantes da área da estética que desejam trabalhar com tecnologia no tratamento da gordura localizada."],
+    ficha: [
+      { rotulo: "Curso", valor: "Hidrolipoclasia não invasiva" },
+      { rotulo: "Professora", valor: "Dra. Déborah Carvalho" },
     ],
     foto: fotoCurso("hidrolipoclasia-nao-invasiva", "Aparelho de ultrassom sendo aplicado no abdômen durante tratamento corporal", 1200, 1800),
   },
